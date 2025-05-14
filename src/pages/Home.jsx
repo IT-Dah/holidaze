@@ -1,3 +1,5 @@
+import SearchBar from "../components/SearchBar";
+
 function Home() {
   return (
     <main className="min-h-screen bg-white text-primary font-body">
@@ -5,11 +7,7 @@ function Home() {
       <section className="bg-[#D2E4EB] py-16 text-center">
         <h1 className="text-4xl font-heading font-bold mb-4">Find your next stay</h1>
         <p className="text-lg mb-6">Search from cozy cabins to city escapes</p>
-        <input
-          type="text"
-          placeholder="Search..."
-          className="px-4 py-2 rounded border w-80 focus:outline-none focus:ring-2 focus:ring-[#FD7C7C]"
-        />
+        <SearchBar />
       </section>
 
       {/* Popular Venues */}
