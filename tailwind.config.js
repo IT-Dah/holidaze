@@ -8,8 +8,10 @@ export default {
       colors: {
         primary: "#1D3557",
         accent: "#D2E4EB",
-        background: "#F1FAEE",
-        cta: "#FF6B6B",
+        background: "#FFFFFF",
+        card: "#F3FBFA",
+        cta: "#FD7C7C",
+        tag: "#BFE2E4",
       },
       fontFamily: {
         heading: ["Montserrat", "sans-serif"],
