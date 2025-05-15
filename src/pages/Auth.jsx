@@ -1,11 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 import { registerUser, loginUser } from "../api/auth";
+import { useAuth } from "../context/AuthContext";
 
 function Auth() {
   const [loginError, setLoginError] = useState("");
   const [registerError, setRegisterError] = useState("");
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -14,9 +18,8 @@ function Auth() {
 
     try {
       const data = await loginUser({ email, password });
-      localStorage.setItem("token", data.accessToken);
-      localStorage.setItem("profile", JSON.stringify(data));
-      alert("Login successful!");
+      login(data); // context + localStorage
+      navigate("/profile"); // redirect after login
     } catch (error) {
       setLoginError(error.message);
     }
@@ -36,7 +39,9 @@ function Auth() {
 
     try {
       await registerUser({ name, email, password });
-      alert("Registration successful! You can now log in.");
+      const data = await loginUser({ email, password });
+      login(data);
+      navigate("/profile"); // redirect after registration
     } catch (error) {
       setRegisterError(error.message);
     }
