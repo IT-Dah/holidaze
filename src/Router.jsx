@@ -4,6 +4,7 @@ import App from "./App";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
+import CreateVenue from "./pages/CreateVenue"; // ✅ ADD THIS
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function AppRouter() {
@@ -24,7 +25,15 @@ function AppRouter() {
             }
           />
 
-          {/* Future routes like /create etc can go here too */}
+          {/* ✅ Add this protected route for creating venues */}
+          <Route
+            path="/create"
+            element={
+              <ProtectedRoute>
+                <CreateVenue />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,3 +1,4 @@
+// src/pages/CreateVenue.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -9,11 +10,16 @@ function CreateVenue() {
     description: "",
     price: "",
     maxGuests: "",
-    media: [{ url: "", alt: "" }],
+    rating: 0,
+    media: [{ url: "", alt: "Venue image" }],
     location: {
       address: "",
       city: "",
+      zip: "",
       country: "",
+      continent: "",
+      lat: 0,
+      lng: 0,
     },
     meta: {
       wifi: false,
@@ -25,18 +31,27 @@ function CreateVenue() {
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const token = JSON.parse(localStorage.getItem("user"))?.accessToken;
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user?.accessToken;
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setError("");
+
     try {
       const res = await fetch(BASE_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
+          "X-Noroff-API-Key": apiKey,
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          price: Number(form.price),
+          maxGuests: Number(form.maxGuests),
+        }),
       });
 
       if (!res.ok) {
@@ -61,33 +76,34 @@ function CreateVenue() {
           placeholder="Venue Name"
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
-          className="w-full border px-4 py-2 rounded"
           required
+          className="w-full border px-4 py-2 rounded"
         />
+
         <textarea
           placeholder="Description"
           value={form.description}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
-          className="w-full border px-4 py-2 rounded"
           required
+          className="w-full border px-4 py-2 rounded"
         />
+
         <input
           type="number"
           placeholder="Price"
           value={form.price}
-          onChange={(e) => setForm({ ...form, price: Number(e.target.value) })}
-          className="w-full border px-4 py-2 rounded"
+          onChange={(e) => setForm({ ...form, price: e.target.value })}
           required
+          className="w-full border px-4 py-2 rounded"
         />
+
         <input
           type="number"
           placeholder="Max Guests"
           value={form.maxGuests}
-          onChange={(e) =>
-            setForm({ ...form, maxGuests: Number(e.target.value) })
-          }
-          className="w-full border px-4 py-2 rounded"
+          onChange={(e) => setForm({ ...form, maxGuests: e.target.value })}
           required
+          className="w-full border px-4 py-2 rounded"
         />
 
         <input
@@ -100,6 +116,29 @@ function CreateVenue() {
               media: [{ url: e.target.value, alt: "Venue image" }],
             })
           }
+          className="w-full border px-4 py-2 rounded"
+        />
+
+        {/* Location */}
+        <input
+          type="text"
+          placeholder="City"
+          value={form.location.city}
+          onChange={(e) =>
+            setForm({ ...form, location: { ...form.location, city: e.target.value } })
+          }
+          required
+          className="w-full border px-4 py-2 rounded"
+        />
+
+        <input
+          type="text"
+          placeholder="Country"
+          value={form.location.country}
+          onChange={(e) =>
+            setForm({ ...form, location: { ...form.location, country: e.target.value } })
+          }
+          required
           className="w-full border px-4 py-2 rounded"
         />
 
@@ -126,7 +165,7 @@ function CreateVenue() {
           Create Venue
         </button>
 
-        {error && <p className="text-red-600">{error}</p>}
+        {error && <p className="text-red-600 text-sm">{error}</p>}
       </form>
     </main>
   );

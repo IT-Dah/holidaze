@@ -1,12 +1,12 @@
 const BASE_URL = "https://api.noroff.dev/api/v1/holidaze";
 
-/**
- * Fetch all venues for a specific profile
- * @param {string} profileName
- * @returns {Promise<Array>} List of venues
- */
-export async function getVenuesByProfile(profileName) {
-  const res = await fetch(`${BASE_URL}/profiles/${profileName}/venues`);
+export async function getVenuesByProfile(profileName, accessToken) {
+  const res = await fetch(`${BASE_URL}/profiles/${profileName}/venues`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
+    },
+  });
 
   if (!res.ok) {
     const error = await res.json();
