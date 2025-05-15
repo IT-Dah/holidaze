@@ -1,8 +1,9 @@
+// src/Router.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
-import CreateVenue from "./pages/CreateVenue"; // ✅ THIS WAS MISSING
+import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function AppRouter() {
@@ -13,15 +14,17 @@ function AppRouter() {
           <Route index element={<Home />} />
           <Route path="/auth" element={<Auth />} />
 
-          {/* Protected route example */}
+          {/* Protected Profile Page */}
           <Route
-            path="/create"
+            path="/profile"
             element={
               <ProtectedRoute>
-                <CreateVenue />
+                <Profile />
               </ProtectedRoute>
             }
           />
+
+          {/* Future routes like /create etc can go here too */}
         </Route>
       </Routes>
     </BrowserRouter>
