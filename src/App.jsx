@@ -1,7 +1,15 @@
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import { Outlet } from "react-router-dom";
+
 function App() {
   return (
-    <div className="min-h-screen bg-cta text-white flex items-center justify-center">
-      <h1 className="text-4xl font-bold">Tailwind is 100% working 🎉</h1>
+    <div className="bg-background text-primary font-body min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-grow">
+        <Outlet />
+      </main>
+      <Footer /> {/* You can create this later */}
     </div>
   );
 }

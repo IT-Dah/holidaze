@@ -1,12 +1,28 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home.jsx";
+import App from "./App";
+import Home from "./pages/Home";
+import Auth from "./pages/Auth";
+import CreateVenue from "./pages/CreateVenue"; // ✅ THIS WAS MISSING
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        {/* Add more routes here when needed */}
+        <Route path="/" element={<App />}>
+          <Route index element={<Home />} />
+          <Route path="/auth" element={<Auth />} />
+
+          {/* Protected route example */}
+          <Route
+            path="/create"
+            element={
+              <ProtectedRoute>
+                <CreateVenue />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
