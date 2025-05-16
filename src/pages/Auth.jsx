@@ -8,6 +8,7 @@ import { useAuth } from "../context/AuthContext";
 function Auth() {
   const [loginError, setLoginError] = useState("");
   const [registerError, setRegisterError] = useState("");
+  const [isManager, setIsManager] = useState(false); // NEW
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -18,8 +19,8 @@ function Auth() {
 
     try {
       const data = await loginUser({ email, password });
-      login(data); // context + localStorage
-      navigate("/profile"); // redirect after login
+      login(data);
+      navigate("/profile");
     } catch (error) {
       setLoginError(error.message);
     }
@@ -38,10 +39,15 @@ function Auth() {
     }
 
     try {
-      await registerUser({ name, email, password });
+      await registerUser({
+        name,
+        email,
+        password,
+        venueManager: isManager, // INCLUDE manager state
+      });
       const data = await loginUser({ email, password });
       login(data);
-      navigate("/profile"); // redirect after registration
+      navigate("/profile");
     } catch (error) {
       setRegisterError(error.message);
     }
@@ -79,6 +85,17 @@ function Auth() {
             <InputField label="Email" name="register-email" />
             <InputField label="Password" name="register-password" type="password" />
             <InputField label="Confirm Password" name="register-confirm" type="password" />
+
+            {/* Venue Manager Checkbox */}
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={isManager}
+                onChange={() => setIsManager(!isManager)}
+              />
+              Register as venue manager
+            </label>
+
             {registerError && <p className="text-red-600 text-sm">{registerError}</p>}
             <Button type="submit" className="w-full">Register</Button>
           </form>

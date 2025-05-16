@@ -11,7 +11,7 @@ function CreateVenue() {
     price: "",
     maxGuests: "",
     rating: 0,
-    media: [{ url: "", alt: "Venue image" }],
+    media: [""],
     location: {
       address: "",
       city: "",
@@ -49,6 +49,7 @@ function CreateVenue() {
         },
         body: JSON.stringify({
           ...form,
+          media: form.media[0] ? [form.media[0]] : [],
           price: Number(form.price),
           maxGuests: Number(form.maxGuests),
         }),
@@ -109,17 +110,27 @@ function CreateVenue() {
         <input
           type="text"
           placeholder="Image URL"
-          value={form.media[0].url}
+          value={form.media[0]}
           onChange={(e) =>
             setForm({
               ...form,
-              media: [{ url: e.target.value, alt: "Venue image" }],
+              media: [e.target.value],
             })
           }
           className="w-full border px-4 py-2 rounded"
         />
 
-        {/* Location */}
+        <input
+          type="text"
+          placeholder="Address"
+          value={form.location.address}
+          onChange={(e) =>
+            setForm({ ...form, location: { ...form.location, address: e.target.value } })
+          }
+          required
+          className="w-full border px-4 py-2 rounded"
+        />
+
         <input
           type="text"
           placeholder="City"
