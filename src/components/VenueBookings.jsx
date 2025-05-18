@@ -27,6 +27,7 @@ function VenueBookings() {
       });
 
       if (!venuesRes.ok) throw new Error("Failed to fetch manager venues");
+
       const ownedVenues = await venuesRes.json();
       const ownedVenueIds = ownedVenues.map((venue) => venue.id);
 
@@ -65,6 +66,7 @@ function VenueBookings() {
         const customer = booking.customer;
         const startDate = new Date(booking.dateFrom).toLocaleDateString();
         const endDate = new Date(booking.dateTo).toLocaleDateString();
+
         const image =
           typeof venue.media?.[0] === "string"
             ? venue.media[0]

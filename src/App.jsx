@@ -9,7 +9,7 @@ function App() {
       <main className="flex-grow">
         <Outlet />
       </main>
-      <Footer /> {/* You can create this later */}
+      <Footer />
     </div>
   );
 }

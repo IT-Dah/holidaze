@@ -1,4 +1,3 @@
-// src/context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
@@ -19,7 +18,6 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("user");
   };
 
-  // ✅ NEW: updateAvatar function
   const updateAvatar = (newAvatarUrl) => {
     const updatedUser = {
       ...user,
@@ -33,7 +31,6 @@ export function AuthProvider({ children }) {
     localStorage.setItem("user", JSON.stringify(updatedUser));
   };
 
-  // Keep user in sync with localStorage
   useEffect(() => {
     if (user) {
       localStorage.setItem("user", JSON.stringify(user));

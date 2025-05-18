@@ -1,4 +1,3 @@
-// src/components/VenueCard.jsx
 import { Link, useNavigate } from "react-router-dom";
 import Tag from "./Tag";
 
@@ -6,7 +5,7 @@ function VenueCard({ id, image, title, location, price, tags = [] }) {
   const navigate = useNavigate();
 
   function handleButtonClick(e) {
-    e.stopPropagation(); // Prevents the Link from triggering
+    e.stopPropagation();
     navigate(`/venues/${id}`);
   }
 

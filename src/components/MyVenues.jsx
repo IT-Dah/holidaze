@@ -17,7 +17,6 @@ function MyVenues() {
       try {
         const venueData = await getVenuesByProfile(user.name, user.accessToken);
         setVenues(venueData);
-        console.log("✅ Owned venues:", venueData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -58,17 +57,15 @@ function MyVenues() {
 
   return (
     <div className="space-y-6">
-      {/* ➕ Add New Venue Button */}
       <div className="text-right">
         <Link
           to="/create"
           className="inline-block bg-cta text-white font-semibold px-4 py-2 rounded shadow hover:opacity-90"
         >
-          ➕ Add New Venue
+          Add New Venue
         </Link>
       </div>
 
-      {/* Empty state */}
       {venues.length === 0 ? (
         <div className="text-center py-8">
           <p className="text-lg mb-2">You haven’t created any venues yet.</p>

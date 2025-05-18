@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import { useEffect, useState } from "react";
 import VenueCard from "../components/VenueCard";
 
@@ -49,15 +48,12 @@ function Home() {
 
   const filteredVenues = venues.filter((venue) => {
     const matchesName = venue.name.toLowerCase().includes(query.toLowerCase());
-    const matchesTags = selectedTags.every(
-      (tag) => venue.meta?.[tag] === true
-    );
+    const matchesTags = selectedTags.every((tag) => venue.meta?.[tag] === true);
     return matchesName && matchesTags;
   });
 
   return (
     <main className="min-h-screen bg-background text-primary font-body">
-      {/* Hero Section */}
       <section className="bg-accent py-16 text-center">
         <h1 className="text-4xl font-heading font-bold mb-4">Find your next stay</h1>
         <p className="text-lg mb-6">Search from cozy cabins to city escapes</p>
@@ -70,7 +66,6 @@ function Home() {
           className="px-4 py-2 rounded border w-80 focus:outline-none focus:ring-2 focus:ring-cta"
         />
 
-        {/* Tag Filter */}
         <div className="flex flex-wrap justify-center gap-2 mt-6">
           {allTags.map((tag) => {
             const isActive = selectedTags.includes(tag);
@@ -99,7 +94,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Venue List */}
       <section className="max-w-6xl mx-auto px-4 py-12">
         <h2 className="text-3xl font-heading font-semibold mb-8 text-center">Popular Venues</h2>
 

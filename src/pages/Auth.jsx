@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthContext";
 function Auth() {
   const [loginError, setLoginError] = useState("");
   const [registerError, setRegisterError] = useState("");
-  const [isManager, setIsManager] = useState(false); // NEW
+  const [isManager, setIsManager] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -39,12 +39,7 @@ function Auth() {
     }
 
     try {
-      await registerUser({
-        name,
-        email,
-        password,
-        venueManager: isManager, // INCLUDE manager state
-      });
+      await registerUser({ name, email, password, venueManager: isManager });
       const data = await loginUser({ email, password });
       login(data);
       navigate("/profile");
@@ -56,7 +51,6 @@ function Auth() {
   return (
     <main className="bg-white min-h-screen font-body text-primary">
       <div className="max-w-xl mx-auto py-12 px-4">
-        {/* Log In */}
         <section className="mb-12">
           <h2 className="text-3xl font-heading font-bold text-center mb-4">Log In</h2>
           <p className="text-center mb-6 font-semibold">Log in to your account</p>
@@ -69,14 +63,12 @@ function Auth() {
           </form>
         </section>
 
-        {/* Divider */}
         <div className="flex items-center gap-2 my-8">
           <hr className="flex-grow border-gray-300" />
           <span className="text-sm font-medium text-gray-500">or</span>
           <hr className="flex-grow border-gray-300" />
         </div>
 
-        {/* Register */}
         <section>
           <h2 className="text-3xl font-heading font-bold text-center mb-4">Register</h2>
           <p className="text-center mb-6 font-semibold">Create a new account</p>
@@ -86,7 +78,6 @@ function Auth() {
             <InputField label="Password" name="register-password" type="password" />
             <InputField label="Confirm Password" name="register-confirm" type="password" />
 
-            {/* Venue Manager Checkbox */}
             <label className="flex items-center gap-2 text-sm">
               <input
                 type="checkbox"

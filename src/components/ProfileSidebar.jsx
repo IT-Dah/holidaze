@@ -1,4 +1,3 @@
-// src/components/ProfileSidebar.jsx
 import { Link } from "react-router-dom";
 import myVenuesIcon from "../assets/icons/home.png";
 import addVenueIcon from "../assets/icons/home-plus.png";
@@ -9,8 +8,6 @@ import { useAuth } from "../context/AuthContext";
 function ProfileSidebar({ activeTab, setActiveTab }) {
   const { user } = useAuth();
   const isManager = user?.venueManager;
-
-  // 🧼 Simplified avatar logic
   const avatarUrl = user?.avatar?.url || user?.avatar || "https://placehold.co/100x100?text=User";
   const avatarAlt = user?.avatar?.alt || "Profile avatar";
 

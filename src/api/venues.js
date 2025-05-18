@@ -14,8 +14,5 @@ export async function getVenuesByProfile(profileName, accessToken) {
   }
 
   const data = await res.json();
-
-  console.log("📤 Full venue list (with owners):", data);
-
   return Array.isArray(data) ? data : [];
 }

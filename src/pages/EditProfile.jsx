@@ -1,4 +1,3 @@
-// src/pages/EditProfile.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -6,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 const BASE_URL = "https://api.noroff.dev/api/v1/holidaze/profiles";
 
 function EditProfile() {
-  const { user, updateAvatar } = useAuth(); // ✅ use updateAvatar, not login
+  const { user, updateAvatar } = useAuth();
   const navigate = useNavigate();
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar?.url || "");
   const [error, setError] = useState("");
@@ -16,7 +15,6 @@ function EditProfile() {
     setError("");
 
     try {
-      // ✅ Update the avatar via API
       const updateResponse = await fetch(`${BASE_URL}/${user.name}`, {
         method: "PUT",
         headers: {
@@ -40,9 +38,7 @@ function EditProfile() {
         throw new Error(errorData.errors?.[0]?.message || "Failed to update avatar");
       }
 
-      // ✅ Just update the avatar context — no need to fetch whole profile again
       updateAvatar(avatarUrl);
-
       navigate("/profile");
     } catch (err) {
       setError(err.message);

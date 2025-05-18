@@ -69,9 +69,8 @@ function MyBookings() {
 
   if (loading) return <p>Loading your bookings...</p>;
   if (error) return <p className="text-red-600">{error}</p>;
-  if (bookings.length === 0) return (
-    <p className="text-center py-6">You don’t have any bookings yet.</p>
-  );
+  if (bookings.length === 0)
+    return <p className="text-center py-6">You don’t have any bookings yet.</p>;
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -97,7 +96,8 @@ function MyBookings() {
               <p className="text-sm text-gray-600">{venue.location?.city || "Unknown location"}</p>
 
               <p className="text-sm mt-2">
-                <strong>From:</strong> {startDate}<br />
+                <strong>From:</strong> {startDate}
+                <br />
                 <strong>To:</strong> {endDate}
               </p>
 

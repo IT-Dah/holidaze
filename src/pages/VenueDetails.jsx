@@ -22,35 +22,35 @@ function VenueDetails() {
     guests: 1,
   });
 
-  async function fetchVenueAndBookings() {
-    try {
-      const venueRes = await fetch(`${BASE_URL}/venues/${id}`);
-      if (!venueRes.ok) throw new Error("Venue not found");
-      const venueData = await venueRes.json();
-      setVenue(venueData);
-
-      if (user && !user.venueManager) {
-        const bookingsRes = await fetch(`${BASE_URL}/bookings?_venue=true`, {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-            "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
-          },
-        });
-
-        if (!bookingsRes.ok) throw new Error("Failed to load bookings");
-
-        const allBookings = await bookingsRes.json();
-        const venueBookings = allBookings.filter((b) => b.venue?.id === id);
-        setBookings(venueBookings);
-      }
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
+    async function fetchVenueAndBookings() {
+      try {
+        const venueRes = await fetch(`${BASE_URL}/venues/${id}`);
+        if (!venueRes.ok) throw new Error("Venue not found");
+        const venueData = await venueRes.json();
+        setVenue(venueData);
+
+        if (user && !user.venueManager) {
+          const bookingsRes = await fetch(`${BASE_URL}/bookings?_venue=true`, {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+              "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
+            },
+          });
+
+          if (!bookingsRes.ok) throw new Error("Failed to load bookings");
+
+          const allBookings = await bookingsRes.json();
+          const venueBookings = allBookings.filter((b) => b.venue?.id === id);
+          setBookings(venueBookings);
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
     fetchVenueAndBookings();
   }, [id, user]);
 
@@ -88,8 +88,6 @@ function VenueDetails() {
       }
 
       alert("Booking successful!");
-      await fetchVenueAndBookings();
-
       setTimeout(() => {
         navigate("/profile?tab=bookings");
       }, 1000);

@@ -6,7 +6,7 @@ import ProfilePage from "./pages/ProfilePage";
 import CreateVenue from "./pages/CreateVenue";
 import EditVenue from "./pages/EditVenue";
 import VenueDetails from "./pages/VenueDetails";
-import EditProfile from "./pages/EditProfile"; // ✅ NEW
+import EditProfile from "./pages/EditProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function AppRouter() {

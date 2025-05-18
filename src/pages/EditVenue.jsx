@@ -12,7 +12,6 @@ function EditVenue() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Fetch venue data
   useEffect(() => {
     async function fetchVenue() {
       try {
