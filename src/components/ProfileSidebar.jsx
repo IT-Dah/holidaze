@@ -14,7 +14,6 @@ function ProfileSidebar({ activeTab, setActiveTab }) {
 
   return (
     <aside className="bg-accent p-6 rounded-xl shadow-md text-center w-full md:w-60 flex flex-col items-center">
-      {/* Avatar + Name + Email */}
       <div className="mb-5 flex flex-col items-center">
         <img
           src={avatarUrl}
@@ -25,7 +24,6 @@ function ProfileSidebar({ activeTab, setActiveTab }) {
         <p className="text-sm text-gray-700 break-words">{user.email}</p>
       </div>
 
-      {/* Navigation buttons */}
       <nav className="mt-4 space-y-2 w-full flex flex-col items-center">
         {isManager ? (
           <>
@@ -59,7 +57,6 @@ function ProfileSidebar({ activeTab, setActiveTab }) {
         )}
       </nav>
 
-      {/* Edit profile icon */}
       <div className="mt-10">
         <Link to="/edit-profile" className="block">
           <img src={editIcon} alt="Edit Profile" className="h-5 w-5 opacity-70 hover:opacity-100 transition" />
@@ -69,7 +66,6 @@ function ProfileSidebar({ activeTab, setActiveTab }) {
   );
 }
 
-// 🔧 Extracted reusable SidebarButton component
 function SidebarButton({ label, icon, active, onClick }) {
   return (
     <button
