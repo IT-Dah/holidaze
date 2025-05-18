@@ -2,8 +2,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
-import Profile from "./pages/Profile";
+import ProfilePage from "./pages/ProfilePage";
 import CreateVenue from "./pages/CreateVenue";
+import EditVenue from "./pages/EditVenue";
+import VenueDetails from "./pages/VenueDetails"; // ✅ new
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function AppRouter() {
@@ -14,17 +16,15 @@ function AppRouter() {
           <Route index element={<Home />} />
           <Route path="/auth" element={<Auth />} />
 
-          {/* ✅ Use working profile page */}
           <Route
             path="/profile"
             element={
               <ProtectedRoute>
-                <Profile />
+                <ProfilePage />
               </ProtectedRoute>
             }
           />
 
-          {/* Create venue route */}
           <Route
             path="/create"
             element={
@@ -33,6 +33,17 @@ function AppRouter() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/edit/:id"
+            element={
+              <ProtectedRoute>
+                <EditVenue />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/venues/:id" element={<VenueDetails />} /> {/* ✅ ADDED */}
         </Route>
       </Routes>
     </BrowserRouter>

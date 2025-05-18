@@ -1,5 +1,3 @@
-// src/api/venues.js
-
 const BASE_URL = "https://api.noroff.dev/api/v1/holidaze";
 
 export async function getVenuesByProfile(profileName, accessToken) {
@@ -17,11 +15,9 @@ export async function getVenuesByProfile(profileName, accessToken) {
 
   const data = await res.json();
 
-  // Debug output for development
-  console.log("📤 Response from API:", data);
-  console.log("👤 profileName (used in API):", profileName);
-  console.log("📦 Returned venue owners:", Array.isArray(data.data) ? data.data.map((v) => v.owner?.name) : []);
+  // ✅ This is the correct structure for this endpoint
+  // It returns an array directly
+  console.log("📤 Full venue list (raw):", data);
 
-  // ✅ ALWAYS return an array (safe fallback)
-  return Array.isArray(data.data) ? data.data : [];
+  return Array.isArray(data) ? data : []; // ✅ NOT data.data
 }
