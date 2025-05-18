@@ -2,9 +2,11 @@ const BASE_URL = "https://api.noroff.dev/api/v1/holidaze";
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 /**
- * Registers a new user as a venue manager by default
+ * Register new user
+ * Required: name, email, password
+ * Optional: venueManager (defaults to false)
  */
-export async function registerUser(userData) {
+export async function registerUser({ name, email, password, venueManager = false }) {
   const response = await fetch(`${BASE_URL}/auth/register`, {
     method: "POST",
     headers: {
@@ -12,8 +14,10 @@ export async function registerUser(userData) {
       "X-Noroff-API-Key": API_KEY,
     },
     body: JSON.stringify({
-      ...userData,
-      venueManager: true, // ✅ You can force this if needed for testing
+      name,
+      email,
+      password,
+      venueManager,
     }),
   });
 
@@ -26,16 +30,16 @@ export async function registerUser(userData) {
 }
 
 /**
- * Logs in an existing user
+ * Login existing user
  */
-export async function loginUser(credentials) {
+export async function loginUser({ email, password }) {
   const response = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-Noroff-API-Key": API_KEY,
     },
-    body: JSON.stringify(credentials),
+    body: JSON.stringify({ email, password }),
   });
 
   if (!response.ok) {
@@ -43,5 +47,5 @@ export async function loginUser(credentials) {
     throw new Error(error.errors?.[0]?.message || "Login failed");
   }
 
-  return await response.json(); // Includes user info + accessToken
+  return await response.json(); // Includes user info + token
 }

@@ -1,10 +1,9 @@
-// src/Router.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
-import CreateVenue from "./pages/CreateVenue"; // ✅ ADD THIS
+import CreateVenue from "./pages/CreateVenue";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function AppRouter() {
@@ -15,7 +14,7 @@ function AppRouter() {
           <Route index element={<Home />} />
           <Route path="/auth" element={<Auth />} />
 
-          {/* Protected Profile Page */}
+          {/* ✅ Use working profile page */}
           <Route
             path="/profile"
             element={
@@ -25,7 +24,7 @@ function AppRouter() {
             }
           />
 
-          {/* ✅ Add this protected route for creating venues */}
+          {/* Create venue route */}
           <Route
             path="/create"
             element={

@@ -21,7 +21,7 @@ function Profile() {
 
       try {
         const data = await getVenuesByProfile(user.name, user.accessToken);
-        setVenues(data);
+        setVenues(data); // ✅ Don't filter here
       } catch (err) {
         setError(err.message);
       } finally {
@@ -87,7 +87,9 @@ function Profile() {
                 {venues?.map((venue) => (
                   <li key={venue.id} className="p-4 border rounded bg-[#F3FBFA]">
                     <h3 className="font-semibold">{venue.name}</h3>
-                    <p className="text-sm text-gray-600">{venue.location?.city || "No location"}</p>
+                    <p className="text-sm text-gray-600">
+                      {venue.location?.city || "No location"}
+                    </p>
                     <p className="text-sm">NOK {venue.price},-</p>
                   </li>
                 ))}

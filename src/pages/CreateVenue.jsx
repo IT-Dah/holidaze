@@ -1,6 +1,7 @@
 // src/pages/CreateVenue.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const BASE_URL = "https://api.noroff.dev/api/v1/holidaze/venues";
 
@@ -31,7 +32,7 @@ function CreateVenue() {
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user } = useAuth();
   const token = user?.accessToken;
   const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -153,7 +154,6 @@ function CreateVenue() {
           className="w-full border px-4 py-2 rounded"
         />
 
-        {/* Meta Checkboxes */}
         <div className="grid grid-cols-2 gap-2">
           {["wifi", "parking", "breakfast", "pets"].map((key) => (
             <label key={key} className="flex gap-2 items-center">
