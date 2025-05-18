@@ -5,7 +5,8 @@ import Auth from "./pages/Auth";
 import ProfilePage from "./pages/ProfilePage";
 import CreateVenue from "./pages/CreateVenue";
 import EditVenue from "./pages/EditVenue";
-import VenueDetails from "./pages/VenueDetails"; // ✅ new
+import VenueDetails from "./pages/VenueDetails";
+import EditProfile from "./pages/EditProfile"; // ✅ NEW
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function AppRouter() {
@@ -43,7 +44,16 @@ function AppRouter() {
             }
           />
 
-          <Route path="/venues/:id" element={<VenueDetails />} /> {/* ✅ ADDED */}
+          <Route
+            path="/edit-profile"
+            element={
+              <ProtectedRoute>
+                <EditProfile />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/venues/:id" element={<VenueDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>
