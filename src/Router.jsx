@@ -11,7 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 function AppRouter() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/holidaze"> {/* 👈 this fixes GitHub Pages routing */}
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
