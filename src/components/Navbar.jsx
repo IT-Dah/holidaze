@@ -13,11 +13,6 @@ function Navbar() {
     navigate("/");
   }
 
-  const avatarUrl =
-    typeof user?.avatar === "string" && user.avatar.trim() !== ""
-      ? user.avatar
-      : "https://placehold.co/40x40?text=?";
-
   return (
     <header className="bg-accent text-primary px-6 py-4 shadow">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
@@ -30,14 +25,7 @@ function Navbar() {
 
           {user ? (
             <>
-              <Link to="/profile" className="flex items-center gap-2">
-                <img
-                  src={avatarUrl}
-                  alt="Avatar"
-                  className="w-8 h-8 rounded-full object-cover border"
-                />
-                <span>Profile</span>
-              </Link>
+              <Link to="/profile">Profile</Link>
               <button onClick={handleLogout} className="hover:underline">
                 Log Out
               </button>
@@ -61,14 +49,7 @@ function Navbar() {
 
           {user ? (
             <>
-              <Link to="/profile" className="flex items-center gap-2">
-                <img
-                  src={avatarUrl}
-                  alt="Avatar"
-                  className="w-6 h-6 rounded-full object-cover border"
-                />
-                <span>Profile</span>
-              </Link>
+              <Link to="/profile">Profile</Link>
               <button onClick={handleLogout} className="block">
                 Log Out
               </button>
