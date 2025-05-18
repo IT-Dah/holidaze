@@ -10,49 +10,47 @@ function VenueBookings() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    async function fetchManagerVenueBookings() {
-      if (!user?.venueManager) return;
-
-      try {
-        // 1. Fetch the venues owned by the manager
-        const venuesRes = await fetch(`${BASE_URL}/profiles/${user.name}/venues`, {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-            "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
-          },
-        });
-
-        if (!venuesRes.ok) throw new Error("Failed to fetch manager venues");
-        const ownedVenues = await venuesRes.json();
-        const ownedVenueIds = ownedVenues.map((venue) => venue.id);
-
-        // 2. Fetch all bookings (with venue + customer)
-        const bookingsRes = await fetch(`${BASE_URL}/bookings?_venue=true&_customer=true`, {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-            "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
-          },
-        });
-
-        if (!bookingsRes.ok) throw new Error("Failed to fetch bookings");
-
-        const allBookings = await bookingsRes.json();
-
-        // 3. Filter only bookings for venues the manager owns
-        const managerBookings = allBookings.filter((booking) =>
-          ownedVenueIds.includes(booking.venue?.id)
-        );
-
-        setBookings(managerBookings);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-
     fetchManagerVenueBookings();
   }, [user]);
+
+  async function fetchManagerVenueBookings() {
+    if (!user?.venueManager) return;
+
+    try {
+      setLoading(true);
+
+      const venuesRes = await fetch(`${BASE_URL}/profiles/${user.name}/venues`, {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+          "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
+        },
+      });
+
+      if (!venuesRes.ok) throw new Error("Failed to fetch manager venues");
+      const ownedVenues = await venuesRes.json();
+      const ownedVenueIds = ownedVenues.map((venue) => venue.id);
+
+      const bookingsRes = await fetch(`${BASE_URL}/bookings?_venue=true&_customer=true`, {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+          "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
+        },
+      });
+
+      if (!bookingsRes.ok) throw new Error("Failed to fetch bookings");
+
+      const allBookings = await bookingsRes.json();
+      const managerBookings = allBookings.filter((booking) =>
+        ownedVenueIds.includes(booking.venue?.id)
+      );
+
+      setBookings(managerBookings);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   if (loading) return <p>Loading bookings...</p>;
   if (error) return <p className="text-red-600">{error}</p>;
