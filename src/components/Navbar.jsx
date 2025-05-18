@@ -1,3 +1,4 @@
+// src/components/Navbar.jsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/holidaze-logo.png";
@@ -13,8 +14,7 @@ function Navbar() {
     navigate("/");
   }
 
-  console.log("User from context:", user);
-
+  const avatarUrl = user?.avatar?.url || "https://placehold.co/40x40?text=?";
 
   return (
     <header className="bg-accent text-primary px-6 py-4 shadow">
@@ -31,8 +31,17 @@ function Navbar() {
 
           {user ? (
             <>
-              <Link to="/profile">Profile</Link>
-              <button onClick={handleLogout} className="hover:underline">Log Out</button>
+              <Link to="/profile" className="flex items-center gap-2">
+                <img
+                  src={avatarUrl}
+                  alt="Avatar"
+                  className="w-8 h-8 rounded-full object-cover border"
+                />
+                <span>Profile</span>
+              </Link>
+              <button onClick={handleLogout} className="hover:underline">
+                Log Out
+              </button>
             </>
           ) : (
             <Link to="/auth" className="hover:underline">Log In / Sign Up</Link>
@@ -53,9 +62,17 @@ function Navbar() {
         <nav className="md:hidden px-6 pt-2 pb-4 space-y-2 text-sm font-medium bg-accent">
           <Link to="/">Home</Link>
           <Link to="/venues">Venues</Link>
+
           {user ? (
             <>
-              <Link to="/profile">Profile</Link>
+              <Link to="/profile" className="flex items-center gap-2">
+                <img
+                  src={avatarUrl}
+                  alt="Avatar"
+                  className="w-6 h-6 rounded-full object-cover border"
+                />
+                <span>Profile</span>
+              </Link>
               <button onClick={handleLogout} className="block">Log Out</button>
             </>
           ) : (

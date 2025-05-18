@@ -1,23 +1,30 @@
+// src/components/ProfileSidebar.jsx
 import { Link } from "react-router-dom";
 import myVenuesIcon from "../assets/icons/home.png";
 import addVenueIcon from "../assets/icons/home-plus.png";
 import bookingsIcon from "../assets/icons/calendar.png";
 import editIcon from "../assets/icons/edit.png";
+import { useAuth } from "../context/AuthContext";
 
-function ProfileSidebar({ user, activeTab, setActiveTab }) {
+function ProfileSidebar({ activeTab, setActiveTab }) {
+  const { user } = useAuth();
   const isManager = user?.venueManager;
+
+  // 🧼 Simplified avatar logic
+  const avatarUrl = user?.avatar?.url || user?.avatar || "https://placehold.co/100x100?text=User";
+  const avatarAlt = user?.avatar?.alt || "Profile avatar";
 
   return (
     <aside className="bg-accent p-6 rounded-xl shadow-md text-center w-full md:w-60">
       <div className="mb-4">
         <img
-          src={user.avatar?.url || "https://placehold.co/100x100?text=User"}
-          alt={user.avatar?.alt || "Profile avatar"}
-          className="w-24 h-24 mx-auto rounded-full border"
+          src={avatarUrl}
+          alt={avatarAlt}
+          className="w-24 h-24 mx-auto rounded-full border object-cover"
         />
       </div>
 
-      <h2 className="text-lg font-bold">{user.name}</h2>
+      <h2 className="text-lg font-bold break-words">{user.name}</h2>
       <p className="text-sm text-gray-700 break-words">{user.email}</p>
 
       <nav className="space-y-2 text-left mt-6">

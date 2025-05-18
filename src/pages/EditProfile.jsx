@@ -1,23 +1,23 @@
+// src/pages/EditProfile.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-const BASE_URL = "https://api.noroff.dev/api/v1/holidaze";
+const BASE_URL = "https://api.noroff.dev/api/v1/holidaze/profiles";
 
 function EditProfile() {
-  const { user, login } = useAuth();
-  const [avatarUrl, setAvatarUrl] = useState(user.avatar?.url || "");
-  const [error, setError] = useState("");
-  const [saving, setSaving] = useState(false);
+  const { user, updateAvatar } = useAuth(); // ✅ use updateAvatar, not login
   const navigate = useNavigate();
+  const [avatarUrl, setAvatarUrl] = useState(user?.avatar?.url || "");
+  const [error, setError] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
-    setSaving(true);
 
     try {
-      const res = await fetch(`${BASE_URL}/profiles/${user.name}`, {
+      // ✅ Update the avatar via API
+      const updateResponse = await fetch(`${BASE_URL}/${user.name}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -25,54 +25,50 @@ function EditProfile() {
           "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
         },
         body: JSON.stringify({
+          name: user.name,
+          email: user.email,
+          venueManager: user.venueManager,
           avatar: {
             url: avatarUrl,
             alt: `${user.name}'s avatar`,
           },
-          venueManager: user.venueManager, // ✅ REQUIRED by API
         }),
       });
 
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.errors?.[0]?.message || "Failed to update profile");
+      if (!updateResponse.ok) {
+        const errorData = await updateResponse.json();
+        throw new Error(errorData.errors?.[0]?.message || "Failed to update avatar");
       }
 
-      const updatedUser = await res.json();
+      // ✅ Just update the avatar context — no need to fetch whole profile again
+      updateAvatar(avatarUrl);
 
-      // Update context and localStorage
-      const newUser = { ...user, avatar: updatedUser.avatar };
-      login(newUser);
-
-      alert("Avatar updated!");
       navigate("/profile");
     } catch (err) {
       setError(err.message);
-    } finally {
-      setSaving(false);
     }
   }
 
   return (
-    <main className="max-w-xl mx-auto p-6 bg-white text-primary font-body min-h-screen">
-      <h1 className="text-2xl font-heading font-bold mb-6">Edit Profile</h1>
+    <main className="max-w-xl mx-auto py-12 px-4 font-body text-primary">
+      <h1 className="text-3xl font-heading font-bold mb-6">Edit Profile</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="text-center">
           <img
             src={avatarUrl || "https://placehold.co/100x100?text=User"}
-            alt="New avatar preview"
-            className="w-24 h-24 mx-auto rounded-full border mb-2 object-cover"
+            alt="Avatar preview"
+            className="w-24 h-24 rounded-full mx-auto border mb-4 object-cover"
           />
         </div>
 
         <input
           type="url"
+          placeholder="Enter new avatar image URL"
           value={avatarUrl}
           onChange={(e) => setAvatarUrl(e.target.value)}
-          placeholder="Enter image URL"
-          required
           className="w-full border px-4 py-2 rounded"
+          required
         />
 
         {error && <p className="text-red-600 text-sm">{error}</p>}
@@ -80,10 +76,9 @@ function EditProfile() {
         <div className="flex gap-4">
           <button
             type="submit"
-            disabled={saving}
             className="bg-cta text-white px-4 py-2 rounded shadow hover:opacity-90"
           >
-            {saving ? "Saving..." : "Save Avatar"}
+            Save Avatar
           </button>
 
           <button

@@ -1,15 +1,13 @@
+// src/context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-
-  // Optional: Load saved user from localStorage
-  useEffect(() => {
+  const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
-    if (storedUser) setUser(JSON.parse(storedUser));
-  }, []);
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
   const login = (userData) => {
     setUser(userData);
@@ -21,8 +19,29 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("user");
   };
 
+  // ✅ NEW: updateAvatar function
+  const updateAvatar = (newAvatarUrl) => {
+    const updatedUser = {
+      ...user,
+      avatar: {
+        ...user.avatar,
+        url: newAvatarUrl,
+        alt: `${user.name}'s avatar`,
+      },
+    };
+    setUser(updatedUser);
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+  };
+
+  // Keep user in sync with localStorage
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, [user]);
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, updateAvatar }}>
       {children}
     </AuthContext.Provider>
   );
