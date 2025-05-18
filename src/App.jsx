@@ -5,11 +5,17 @@ import { Outlet } from "react-router-dom";
 function App() {
   return (
     <div className="bg-background text-primary font-body min-h-screen flex flex-col">
-      <Navbar />
+      <header>
+        <Navbar />
+      </header>
+
       <main className="flex-grow">
         <Outlet />
       </main>
-      <Footer />
+
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }
