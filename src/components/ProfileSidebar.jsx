@@ -31,20 +31,18 @@ function ProfileSidebar({ user, activeTab, setActiveTab }) {
               My Venues
             </button>
 
-            <Link to="/create" className="flex items-center gap-2 w-full">
-              <img src={addVenueIcon} alt="Add Venue" className="h-5 w-5" />
-              Add Venue
-            </Link>
-
-            {/* Optional future feature:
             <button
-              onClick={() => setActiveTab("bookings")}
-              className={`flex items-center gap-2 w-full ${activeTab === "bookings" ? "font-bold" : ""}`}
+              onClick={() => setActiveTab("venue-bookings")}
+              className={`flex items-center gap-2 w-full ${activeTab === "venue-bookings" ? "font-bold" : ""}`}
             >
               <img src={bookingsIcon} alt="Venue Bookings" className="h-5 w-5" />
               Venue Bookings
             </button>
-            */}
+
+            <Link to="/create" className="flex items-center gap-2 w-full">
+              <img src={addVenueIcon} alt="Add Venue" className="h-5 w-5" />
+              Add Venue
+            </Link>
           </>
         ) : (
           <button
