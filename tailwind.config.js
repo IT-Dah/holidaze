@@ -10,7 +10,7 @@ export default {
         accent: "#D2E4EB",
         background: "#FFFFFF",
         card: "#F3FBFA",
-        cta: "#FD7C7C",
+        cta: "#BA4F4F",
         tag: "#BFE2E4",
       },
       fontFamily: {
