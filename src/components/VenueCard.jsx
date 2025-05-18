@@ -9,6 +9,9 @@ function VenueCard({ id, image, title, location, price, tags = [] }) {
     navigate(`/venues/${id}`);
   }
 
+  const numericPrice = parseInt(price.toString().replace(/[^\d]/g, ""));
+  const formattedPrice = `${numericPrice} EUR / night`;
+
   return (
     <Link
       to={`/venues/${id}`}
@@ -32,11 +35,7 @@ function VenueCard({ id, image, title, location, price, tags = [] }) {
         <h3 className="text-lg font-bold font-heading">{title}</h3>
         <p className="text-sm">{location}</p>
 
-        <div className="flex items-center my-2 text-yellow-500 text-sm">
-          ★★★★★
-        </div>
-
-        <p className="text-sm font-medium mb-3">{price}</p>
+        <p className="text-sm font-medium my-2">{formattedPrice}</p>
 
         <button
           onClick={handleButtonClick}

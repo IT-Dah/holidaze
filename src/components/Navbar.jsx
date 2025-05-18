@@ -13,9 +13,10 @@ function Navbar() {
     navigate("/");
   }
 
-  const avatarUrl = typeof user?.avatar === "string"
-    ? user.avatar
-    : "https://placehold.co/40x40?text=?";
+  const avatarUrl =
+    typeof user?.avatar === "string" && user.avatar.trim() !== ""
+      ? user.avatar
+      : "https://placehold.co/40x40?text=?";
 
   return (
     <header className="bg-accent text-primary px-6 py-4 shadow">
@@ -26,7 +27,6 @@ function Navbar() {
 
         <nav className="hidden md:flex gap-6 text-sm font-medium items-center">
           <Link to="/">Home</Link>
-          <Link to="/venues">Venues</Link>
 
           {user ? (
             <>
@@ -58,7 +58,6 @@ function Navbar() {
       {isOpen && (
         <nav className="md:hidden px-6 pt-2 pb-4 space-y-2 text-sm font-medium bg-accent">
           <Link to="/">Home</Link>
-          <Link to="/venues">Venues</Link>
 
           {user ? (
             <>

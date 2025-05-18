@@ -27,9 +27,10 @@ function ProfilePage() {
 
   return (
     <main className="min-h-screen bg-white font-body text-primary">
-      <div className="max-w-7xl mx-auto px-4 py-8 md:flex gap-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8 items-center md:items-start">
         <ProfileSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-        <div className="flex-1">
+
+        <div className="w-full md:flex-1">
           {user.venueManager ? (
             activeTab === "venues" ? <MyVenues /> : <VenueBookings />
           ) : (
