@@ -106,93 +106,117 @@ function VenueDetails() {
       : venue.media?.[0]?.url || "https://placehold.co/600x400";
 
   return (
-    <main className="max-w-4xl mx-auto p-6 bg-white font-body text-primary">
+    <main className="max-w-6xl mx-auto p-6 font-body text-primary">
       <img
         src={image}
         alt={venue.name}
-        className="w-full h-64 object-cover rounded mb-4"
+        className="w-full h-72 md:h-96 object-cover rounded mb-6"
       />
-      <h1 className="text-2xl font-heading font-bold">{venue.name}</h1>
-      <p className="text-sm text-gray-600 mb-2">
-        {venue.location?.city}, {venue.location?.country}
-      </p>
-      <p className="mb-4">{venue.description}</p>
-      <p className="text-lg font-semibold mb-6">
-        NOK {venue.price},- per night
-      </p>
 
-      {!user ? (
-        <p className="text-sm text-gray-700">
-          Please{" "}
-          <Link to="/auth" className="text-blue-600 underline">
-            log in
-          </Link>{" "}
-          to book this venue.
-        </p>
-      ) : user.venueManager ? (
-        <p className="text-sm text-red-600 font-medium mt-6">
-          As a venue manager, you cannot book other venues.{" "}
-          <Link to="/profile" className="underline text-blue-600">
-            Go to your profile to manage your venues.
-          </Link>
-        </p>
-      ) : (
-        <form onSubmit={handleBooking} className="space-y-4 max-w-md">
-          <div>
-            <label className="block text-sm font-medium mb-1">From</label>
-            <DatePicker
-              selected={booking.dateFrom}
-              onChange={(date) =>
-                setBooking({ ...booking, dateFrom: date })
-              }
-              selectsStart
-              startDate={booking.dateFrom}
-              endDate={booking.dateTo}
-              minDate={new Date()}
-              filterDate={(date) => !isDateUnavailable(date)}
-              placeholderText="Select start date"
-              className="w-full border px-4 py-2 rounded"
-            />
+      <div className="grid md:grid-cols-3 gap-8">
+        {/* Venue info */}
+        <div className="md:col-span-2">
+          <h1 className="text-3xl font-heading font-bold mb-1">{venue.name}</h1>
+          <p className="text-gray-600 mb-1">
+            {venue.location?.city}, {venue.location?.country}
+          </p>
+          <p className="text-lg font-semibold mb-6">
+            NOK {venue.price},- /night
+          </p>
+
+          <h2 className="text-xl font-heading font-bold mb-2">Amenities</h2>
+          <ul className="list-disc pl-5 space-y-1 mb-6 text-sm">
+            {venue.meta?.wifi && <li>Free Wi-Fi</li>}
+            {venue.meta?.parking && <li>Free parking</li>}
+            {venue.meta?.breakfast && <li>Free breakfast</li>}
+            {venue.meta?.pets && <li>Pet-friendly</li>}
+          </ul>
+
+          <h2 className="text-xl font-heading font-bold mb-2">Description</h2>
+          <p className="text-sm">{venue.description}</p>
+        </div>
+
+        {/* Booking card */}
+        <div className="md:col-span-1">
+          <div className="bg-[#F3FBFA] p-6 rounded-xl shadow">
+            <h2 className="text-xl font-heading font-bold mb-4">Booking</h2>
+            {!user ? (
+              <p className="text-sm text-gray-700">
+                Please{" "}
+                <Link to="/auth" className="text-blue-600 underline">
+                  log in
+                </Link>{" "}
+                to book this venue.
+              </p>
+            ) : user.venueManager ? (
+              <p className="text-sm text-red-600 font-medium">
+                As a venue manager, you cannot book other venues.{" "}
+                <Link to="/profile" className="underline text-blue-600">
+                  Go to your profile to manage your venues.
+                </Link>
+              </p>
+            ) : (
+              <form onSubmit={handleBooking} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">From</label>
+                  <DatePicker
+                    selected={booking.dateFrom}
+                    onChange={(date) =>
+                      setBooking({ ...booking, dateFrom: date })
+                    }
+                    selectsStart
+                    startDate={booking.dateFrom}
+                    endDate={booking.dateTo}
+                    minDate={new Date()}
+                    filterDate={(date) => !isDateUnavailable(date)}
+                    placeholderText="Select start date"
+                    className="w-full border px-4 py-2 rounded"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">To</label>
+                  <DatePicker
+                    selected={booking.dateTo}
+                    onChange={(date) =>
+                      setBooking({ ...booking, dateTo: date })
+                    }
+                    selectsEnd
+                    startDate={booking.dateFrom}
+                    endDate={booking.dateTo}
+                    minDate={booking.dateFrom || new Date()}
+                    filterDate={(date) => !isDateUnavailable(date)}
+                    placeholderText="Select end date"
+                    className="w-full border px-4 py-2 rounded"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">Guests</label>
+                  <input
+                    type="number"
+                    value={booking.guests}
+                    onChange={(e) =>
+                      setBooking({ ...booking, guests: Number(e.target.value) })
+                    }
+                    min={1}
+                    max={venue.maxGuests || 10}
+                    required
+                    className="w-full border px-4 py-2 rounded"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="bg-[#BA4F4F] text-white px-4 py-2 rounded w-full font-semibold hover:opacity-90"
+                >
+                  Book Now
+                </button>
+              </form>
+            )}
           </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">To</label>
-            <DatePicker
-              selected={booking.dateTo}
-              onChange={(date) => setBooking({ ...booking, dateTo: date })}
-              selectsEnd
-              startDate={booking.dateFrom}
-              endDate={booking.dateTo}
-              minDate={booking.dateFrom || new Date()}
-              filterDate={(date) => !isDateUnavailable(date)}
-              placeholderText="Select end date"
-              className="w-full border px-4 py-2 rounded"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">Guests</label>
-            <input
-              type="number"
-              value={booking.guests}
-              onChange={(e) =>
-                setBooking({ ...booking, guests: Number(e.target.value) })
-              }
-              min={1}
-              max={venue.maxGuests || 10}
-              required
-              className="w-full border px-4 py-2 rounded"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="bg-cta text-white px-4 py-2 rounded shadow hover:opacity-90"
-          >
-            Book Now
-          </button>
-        </form>
-      )}
+        </div>
+      </div>
     </main>
   );
 }
