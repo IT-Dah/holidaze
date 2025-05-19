@@ -67,8 +67,16 @@ function CreateVenue() {
     }
   }
 
+  const handleChange = (key, value) => setForm(prev => ({ ...prev, [key]: value }));
+
+  const handleLocationChange = (key, value) =>
+    setForm(prev => ({ ...prev, location: { ...prev.location, [key]: value } }));
+
+  const toggleMeta = (key) =>
+    setForm(prev => ({ ...prev, meta: { ...prev.meta, [key]: !prev.meta[key] } }));
+
   return (
-    <div className="max-w-2xl mx-auto p-6 font-body text-primary">
+    <main className="max-w-2xl mx-auto p-6 font-body text-primary">
       <div className="bg-[#F3FBFA] p-6 rounded-xl shadow">
         <h1 className="text-3xl font-heading font-bold mb-6 text-center">Create Venue</h1>
 
@@ -77,7 +85,7 @@ function CreateVenue() {
             type="text"
             placeholder="Title"
             value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            onChange={(e) => handleChange("name", e.target.value)}
             required
             className="w-full border px-4 py-2 rounded"
           />
@@ -85,16 +93,16 @@ function CreateVenue() {
           <textarea
             placeholder="Description"
             value={form.description}
-            onChange={(e) => setForm({ ...form, description: e.target.value })}
+            onChange={(e) => handleChange("description", e.target.value)}
             required
             className="w-full border px-4 py-2 rounded h-32"
           />
 
           <input
             type="number"
-            placeholder="Price per night (EUR)"
+            placeholder="Price per night (NOK)"
             value={form.price}
-            onChange={(e) => setForm({ ...form, price: e.target.value })}
+            onChange={(e) => handleChange("price", e.target.value)}
             required
             className="w-full border px-4 py-2 rounded"
           />
@@ -103,7 +111,7 @@ function CreateVenue() {
             type="number"
             placeholder="Max guests"
             value={form.maxGuests}
-            onChange={(e) => setForm({ ...form, maxGuests: e.target.value })}
+            onChange={(e) => handleChange("maxGuests", e.target.value)}
             required
             className="w-full border px-4 py-2 rounded"
           />
@@ -112,12 +120,7 @@ function CreateVenue() {
             type="text"
             placeholder="Image URL"
             value={form.media[0]}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                media: [e.target.value],
-              })
-            }
+            onChange={(e) => setForm({ ...form, media: [e.target.value] })}
             className="w-full border px-4 py-2 rounded"
           />
 
@@ -125,9 +128,7 @@ function CreateVenue() {
             type="text"
             placeholder="Address"
             value={form.location.address}
-            onChange={(e) =>
-              setForm({ ...form, location: { ...form.location, address: e.target.value } })
-            }
+            onChange={(e) => handleLocationChange("address", e.target.value)}
             required
             className="w-full border px-4 py-2 rounded"
           />
@@ -136,9 +137,7 @@ function CreateVenue() {
             type="text"
             placeholder="City"
             value={form.location.city}
-            onChange={(e) =>
-              setForm({ ...form, location: { ...form.location, city: e.target.value } })
-            }
+            onChange={(e) => handleLocationChange("city", e.target.value)}
             required
             className="w-full border px-4 py-2 rounded"
           />
@@ -147,36 +146,31 @@ function CreateVenue() {
             type="text"
             placeholder="Country"
             value={form.location.country}
-            onChange={(e) =>
-              setForm({ ...form, location: { ...form.location, country: e.target.value } })
-            }
+            onChange={(e) => handleLocationChange("country", e.target.value)}
             required
             className="w-full border px-4 py-2 rounded"
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {/* Updated tags/checkboxes */}
+          <div className="grid grid-cols-2 gap-2">
             {[
-              { key: "wifi", label: "Free wi-fi" },
-              { key: "pets", label: "Pet-friendly" },
-              { key: "parking", label: "Free parking" },
-              { key: "breakfast", label: "Self check-in (with smart lock)" },
+              { key: "wifi", label: "Wifi" },
+              { key: "breakfast", label: "Breakfast" },
+              { key: "parking", label: "Parking" },
+              { key: "pets", label: "Pets" },
             ].map(({ key, label }) => (
               <label key={key} className="flex gap-2 items-center text-sm">
                 <input
                   type="checkbox"
                   checked={form.meta[key]}
-                  onChange={() =>
-                    setForm({
-                      ...form,
-                      meta: { ...form.meta, [key]: !form.meta[key] },
-                    })
-                  }
+                  onChange={() => toggleMeta(key)}
                 />
                 {label}
               </label>
             ))}
           </div>
 
+          {/* Consistent button styling */}
           <button
             type="submit"
             className="bg-[#1F3B57] text-white w-full font-semibold py-2 rounded shadow hover:opacity-90"
@@ -187,7 +181,7 @@ function CreateVenue() {
           <button
             type="button"
             onClick={() => navigate("/profile")}
-            className="bg-gray-300 text-primary w-full font-semibold py-2 rounded shadow hover:opacity-90"
+            className="bg-[#D2E4EB] text-primary w-full font-semibold py-2 rounded shadow hover:opacity-90 mt-2"
           >
             Cancel
           </button>
@@ -195,7 +189,7 @@ function CreateVenue() {
           {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
         </form>
       </div>
-    </div>
+    </main>
   );
 }
 

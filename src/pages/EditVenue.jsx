@@ -107,7 +107,7 @@ function EditVenue() {
   if (!form) return null;
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white font-body text-primary">
+    <main className="max-w-2xl mx-auto p-6 bg-white font-body text-primary">
       <h1 className="text-2xl font-heading font-bold mb-4">Edit Venue</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -182,8 +182,14 @@ function EditVenue() {
           className="w-full border px-4 py-2 rounded"
         />
 
+        {/* Updated tags/checkboxes */}
         <div className="grid grid-cols-2 gap-2">
-          {["wifi", "parking", "breakfast", "pets"].map((key) => (
+          {[
+            { key: "wifi", label: "Wifi" },
+            { key: "breakfast", label: "Breakfast" },
+            { key: "parking", label: "Parking" },
+            { key: "pets", label: "Pets" },
+          ].map(({ key, label }) => (
             <label key={key} className="flex gap-2 items-center text-sm">
               <input
                 type="checkbox"
@@ -191,14 +197,15 @@ function EditVenue() {
                 checked={form.meta[key]}
                 onChange={handleChange}
               />
-              {key.charAt(0).toUpperCase() + key.slice(1)}
+              {label}
             </label>
           ))}
         </div>
 
+        {/* Consistent button styling */}
         <button
           type="submit"
-          className="bg-green-600 text-white px-4 py-2 rounded shadow hover:opacity-90"
+          className="bg-[#1F3B57] text-white w-full font-semibold py-2 rounded shadow hover:opacity-90"
         >
           Save Changes
         </button>
@@ -206,14 +213,14 @@ function EditVenue() {
         <button
           type="button"
           onClick={() => navigate("/profile")}
-          className="ml-4 bg-red-600 text-white px-4 py-2 rounded shadow hover:opacity-90"
+          className="bg-[#D2E4EB] text-primary w-full font-semibold py-2 rounded shadow hover:opacity-90 mt-2"
         >
           Cancel
         </button>
 
         {error && <p className="text-red-600 text-sm">{error}</p>}
       </form>
-    </div>
+    </main>
   );
 }
 
