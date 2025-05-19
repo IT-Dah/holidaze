@@ -1,3 +1,4 @@
+// ✅ src/pages/MyVenues.jsx
 import { useEffect, useState } from "react";
 import { getVenuesByProfile } from "../api/venues";
 import { useAuth } from "../context/AuthContext";
@@ -58,14 +59,7 @@ function MyVenues() {
 
   return (
     <div className="space-y-6">
-      <div className="text-right">
-        <Link
-          to="/create"
-          className="inline-block bg-cta text-white font-semibold px-4 py-2 rounded shadow hover:opacity-90"
-        >
-          Add New Venue
-        </Link>
-      </div>
+      <h2 className="text-2xl font-heading font-bold">My Venues</h2>
 
       {venues.length === 0 ? (
         <div className="text-center py-8">
@@ -78,38 +72,44 @@ function MyVenues() {
           </Link>
         </div>
       ) : (
-        <div className="grid gap-6">
-          {venues.map((venue) => {
-            const image =
-              typeof venue.media?.[0] === "string"
-                ? venue.media[0]
-                : venue.media?.[0]?.url || "https://placehold.co/100x75";
+        <>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {venues.map((venue) => {
+              const image =
+                typeof venue.media?.[0] === "string"
+                  ? venue.media[0]
+                  : venue.media?.[0]?.url || "https://placehold.co/100x75";
 
-            return (
-              <div key={venue.id} className="p-4 border rounded bg-[#F3FBFA]">
-                <div className="flex items-start gap-4">
-                  <img
-                    src={image}
-                    alt={venue.name}
-                    className="w-24 h-16 object-cover rounded border"
-                  />
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg">{venue.name}</h3>
+              return (
+                <div
+                  key={venue.id}
+                  className="p-4 bg-[#F3FBFA] border border-gray-200 rounded-xl shadow-sm"
+                >
+                  <div className="flex flex-col">
+                    <img
+                      src={image}
+                      alt={venue.name}
+                      className="w-full h-40 object-cover rounded mb-3"
+                    />
+                    <h3 className="text-lg font-heading font-bold">
+                      {venue.name}
+                    </h3>
                     <p className="text-sm text-gray-600">
-                      {venue.location?.city || "No location"}
+                      {venue.location?.city || "Unknown location"}, {venue.location?.country}
                     </p>
-                    <p className="text-sm">{formatCurrency(venue.price)}</p>
-
-                    <div className="flex gap-4 mt-2">
+                    <p className="text-sm mt-1 mb-2">
+                      {formatCurrency(venue.price)} /night
+                    </p>
+                    <div className="flex justify-between text-sm">
                       <Link
                         to={`/edit/${venue.id}`}
-                        className="text-sm text-green-700 hover:underline"
+                        className="text-green-700 hover:underline"
                       >
                         Edit
                       </Link>
                       <button
                         onClick={() => handleDelete(venue.id)}
-                        className="text-sm text-red-600 hover:underline"
+                        className="text-red-600 hover:underline"
                         disabled={deletingId === venue.id}
                       >
                         {deletingId === venue.id ? "Deleting…" : "Delete"}
@@ -117,10 +117,19 @@ function MyVenues() {
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-8 flex justify-start sm:justify-left">
+            <Link
+              to="/create"
+              className="block bg-[#BA4F4F] text-white font-semibold px-4 py-2 rounded shadow hover:opacity-90 text-center w-full sm:w-auto"
+            >
+              Add New Venue
+            </Link>
+          </div>
+        </>
       )}
     </div>
   );
