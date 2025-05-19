@@ -107,7 +107,7 @@ function EditVenue() {
   if (!form) return null;
 
   return (
-    <main className="max-w-2xl mx-auto p-6 bg-white font-body text-primary">
+    <div className="max-w-2xl mx-auto p-6 bg-white font-body text-primary">
       <h1 className="text-2xl font-heading font-bold mb-4">Edit Venue</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -213,7 +213,7 @@ function EditVenue() {
 
         {error && <p className="text-red-600 text-sm">{error}</p>}
       </form>
-    </main>
+    </div>
   );
 }
 

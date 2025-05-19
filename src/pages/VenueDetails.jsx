@@ -106,7 +106,7 @@ function VenueDetails() {
       : venue.media?.[0]?.url || "https://placehold.co/600x400";
 
   return (
-    <main className="max-w-6xl mx-auto p-6 font-body text-primary">
+    <div className="max-w-6xl mx-auto p-6 font-body text-primary">
       <img
         src={image}
         alt={venue.name}
@@ -196,7 +196,7 @@ function VenueDetails() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 

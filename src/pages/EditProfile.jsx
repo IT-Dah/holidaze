@@ -46,7 +46,7 @@ function EditProfile() {
   }
 
   return (
-    <main className="max-w-4xl mx-auto p-6 font-body text-primary">
+    <div className="max-w-4xl mx-auto p-6 font-body text-primary">
       <div className="bg-[#F3FBFA] p-8 rounded-xl shadow text-center max-w-xl mx-auto">
         <h1 className="text-2xl font-heading font-bold mb-6">Edit Your Avatar</h1>
 
@@ -84,7 +84,7 @@ function EditProfile() {
           </button>
         </form>
       </div>
-    </main>
+    </div>
   );
 }
 

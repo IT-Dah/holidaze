@@ -68,7 +68,7 @@ function CreateVenue() {
   }
 
   return (
-    <main className="max-w-2xl mx-auto p-6 font-body text-primary">
+    <div className="max-w-2xl mx-auto p-6 font-body text-primary">
       <div className="bg-[#F3FBFA] p-6 rounded-xl shadow">
         <h1 className="text-3xl font-heading font-bold mb-6 text-center">Create Venue</h1>
 
@@ -195,7 +195,7 @@ function CreateVenue() {
           {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
         </form>
       </div>
-    </main>
+    </div>
   );
 }
 

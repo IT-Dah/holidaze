@@ -53,7 +53,7 @@ function Home() {
   });
 
   return (
-    <main className="min-h-screen bg-background text-primary font-body">
+    <div className="min-h-screen bg-background text-primary font-body">
       <section className="bg-accent py-16 text-center">
         <h1 className="text-4xl font-heading font-bold mb-4">Find your next stay</h1>
         <p className="text-lg mb-6">Search from cozy cabins to city escapes</p>
@@ -128,7 +128,7 @@ function Home() {
           })}
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 

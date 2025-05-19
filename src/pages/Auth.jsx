@@ -49,7 +49,7 @@ function Auth() {
   }
 
   return (
-    <main className="bg-white min-h-screen font-body text-primary">
+    <div className="bg-white min-h-screen font-body text-primary">
       <div className="max-w-xl mx-auto py-12 px-4">
         <section className="mb-12">
           <h2 className="text-3xl font-heading font-bold text-center mb-4">Log In</h2>
@@ -92,7 +92,7 @@ function Auth() {
           </form>
         </section>
       </div>
-    </main>
+    </div>
   );
 }
 
