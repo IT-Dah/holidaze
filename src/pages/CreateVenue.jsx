@@ -184,6 +184,14 @@ function CreateVenue() {
             Publish
           </button>
 
+          <button
+            type="button"
+            onClick={() => navigate("/profile")}
+            className="bg-gray-300 text-primary w-full font-semibold py-2 rounded shadow hover:opacity-90"
+          >
+            Cancel
+          </button>
+
           {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
         </form>
       </div>
