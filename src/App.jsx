@@ -5,15 +5,15 @@ import { Outlet } from "react-router-dom";
 function App() {
   return (
     <div className="bg-background text-primary font-body min-h-screen flex flex-col">
-      <header>
+      <header role="banner">
         <Navbar />
       </header>
 
-      <main className="flex-grow">
+      <main role="main" className="flex-grow">
         <Outlet />
       </main>
 
-      <footer>
+      <footer role="contentinfo">
         <Footer />
       </footer>
     </div>

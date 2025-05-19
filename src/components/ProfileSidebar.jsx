@@ -24,7 +24,7 @@ function ProfileSidebar({ activeTab, setActiveTab }) {
         <p className="text-sm text-gray-700 break-words">{user.email}</p>
       </div>
 
-      <nav className="mt-4 space-y-2 w-full flex flex-col items-center">
+      <nav className="mt-4 space-y-2 w-full flex flex-col items-center" aria-label="Profile Navigation">
         {isManager ? (
           <>
             <SidebarButton
@@ -73,6 +73,7 @@ function SidebarButton({ label, icon, active, onClick }) {
       className={`flex items-center gap-2 w-full max-w-[200px] justify-center px-3 py-2 rounded-md text-sm transition ${
         active ? "bg-white/30 font-semibold" : "hover:bg-white/20"
       }`}
+      type="button"
     >
       <img src={icon} alt="" className="h-5 w-5" />
       {label}
