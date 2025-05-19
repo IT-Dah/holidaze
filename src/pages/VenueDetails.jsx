@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { isWithinInterval } from "date-fns";
+import CustomDatePicker from "../components/CustomDatePicker";
 
 const BASE_URL = "https://api.noroff.dev/api/v1/holidaze";
 
@@ -140,6 +139,7 @@ function VenueDetails() {
         <div className="md:col-span-1">
           <div className="bg-[#F3FBFA] p-6 rounded-xl shadow">
             <h2 className="text-xl font-heading font-bold mb-4">Booking</h2>
+
             {!user ? (
               <p className="text-sm text-gray-700">
                 Please{" "}
@@ -157,39 +157,17 @@ function VenueDetails() {
               </p>
             ) : (
               <form onSubmit={handleBooking} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">From</label>
-                  <DatePicker
-                    selected={booking.dateFrom}
-                    onChange={(date) =>
-                      setBooking({ ...booking, dateFrom: date })
-                    }
-                    selectsStart
-                    startDate={booking.dateFrom}
-                    endDate={booking.dateTo}
-                    minDate={new Date()}
-                    filterDate={(date) => !isDateUnavailable(date)}
-                    placeholderText="Select start date"
-                    className="w-full border px-4 py-2 rounded"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-1">To</label>
-                  <DatePicker
-                    selected={booking.dateTo}
-                    onChange={(date) =>
-                      setBooking({ ...booking, dateTo: date })
-                    }
-                    selectsEnd
-                    startDate={booking.dateFrom}
-                    endDate={booking.dateTo}
-                    minDate={booking.dateFrom || new Date()}
-                    filterDate={(date) => !isDateUnavailable(date)}
-                    placeholderText="Select end date"
-                    className="w-full border px-4 py-2 rounded"
-                  />
-                </div>
+                <CustomDatePicker
+                  selected={booking.dateFrom}
+                  onChange={(date) => {
+                    const [start, end] = date;
+                    setBooking({ ...booking, dateFrom: start, dateTo: end });
+                  }}
+                  startDate={booking.dateFrom}
+                  endDate={booking.dateTo}
+                  minDate={new Date()}
+                  filterDate={(date) => !isDateUnavailable(date)}
+                />
 
                 <div>
                   <label className="block text-sm font-medium mb-1">Guests</label>
