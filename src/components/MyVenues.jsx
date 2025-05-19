@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getVenuesByProfile } from "../api/venues";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import { formatCurrency } from "../utils/formatCurrency";
 
 function MyVenues() {
   const { user } = useAuth();
@@ -97,7 +98,7 @@ function MyVenues() {
                     <p className="text-sm text-gray-600">
                       {venue.location?.city || "No location"}
                     </p>
-                    <p className="text-sm">NOK {venue.price},-</p>
+                    <p className="text-sm">{formatCurrency(venue.price)}</p>
 
                     <div className="flex gap-4 mt-2">
                       <Link

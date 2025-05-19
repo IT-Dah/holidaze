@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { isWithinInterval } from "date-fns";
 import CustomDatePicker from "../components/CustomDatePicker";
+import { formatCurrency } from "../utils/formatCurrency"; // ✅ Added
 
 const BASE_URL = "https://api.noroff.dev/api/v1/holidaze";
 
@@ -120,7 +121,7 @@ function VenueDetails() {
             {venue.location?.city}, {venue.location?.country}
           </p>
           <p className="text-lg font-semibold mb-6">
-            NOK {venue.price},- /night
+            {formatCurrency(venue.price)} /night
           </p>
 
           <h2 className="text-xl font-heading font-bold mb-2">Amenities</h2>
