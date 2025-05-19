@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { isWithinInterval } from "date-fns";
 import CustomDatePicker from "../components/CustomDatePicker";
-import { formatCurrency } from "../utils/formatCurrency"; // ✅ Added
+import { formatCurrency } from "../utils/formatCurrency";
 
 const BASE_URL = "https://api.noroff.dev/api/v1/holidaze";
 

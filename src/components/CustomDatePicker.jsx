@@ -20,7 +20,7 @@ function CustomDatePicker({
       endDate={endDate}
       minDate={minDate}
       filterDate={filterDate}
-      monthsShown={1} // 👈 Show only 1 calendar!
+      monthsShown={1}
       calendarClassName="!bg-white !rounded-xl !shadow-md p-4 text-sm text-gray-800 w-full"
       dayClassName={() =>
         "w-10 h-10 flex items-center justify-center rounded hover:bg-sky-100"

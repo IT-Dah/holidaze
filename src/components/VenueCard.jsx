@@ -26,7 +26,6 @@ function VenueCard({ id, image, title, location, price, tags = [] }) {
           />
         </div>
 
-        {/* Tag container with fixed height for consistency */}
         <div className="min-h-[2rem] flex flex-wrap gap-2 mb-2">
           {tags.map((tag) => (
             <Tag key={tag} label={tag} />

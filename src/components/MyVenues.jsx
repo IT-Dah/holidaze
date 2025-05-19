@@ -1,4 +1,3 @@
-// ✅ src/pages/MyVenues.jsx
 import { useEffect, useState } from "react";
 import { getVenuesByProfile } from "../api/venues";
 import { useAuth } from "../context/AuthContext";
