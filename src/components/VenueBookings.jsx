@@ -1,3 +1,4 @@
+// ✅ src/pages/VenueBookings.jsx
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
@@ -61,41 +62,50 @@ function VenueBookings() {
 
   return (
     <div className="space-y-6">
-      {bookings.map((booking) => {
-        const venue = booking.venue;
-        const customer = booking.customer;
-        const startDate = new Date(booking.dateFrom).toLocaleDateString();
-        const endDate = new Date(booking.dateTo).toLocaleDateString();
+      <h2 className="text-2xl font-heading font-bold">Venue Bookings</h2>
 
-        const image =
-          typeof venue.media?.[0] === "string"
-            ? venue.media[0]
-            : venue.media?.[0]?.url || "https://placehold.co/600x400";
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {bookings.map((booking) => {
+          const venue = booking.venue;
+          const customer = booking.customer;
+          const startDate = new Date(booking.dateFrom).toLocaleDateString();
+          const endDate = new Date(booking.dateTo).toLocaleDateString();
 
-        return (
-          <div key={booking.id} className="p-4 border rounded bg-[#F3FBFA] shadow">
-            <div className="flex gap-4">
+          const image =
+            typeof venue.media?.[0] === "string"
+              ? venue.media[0]
+              : venue.media?.[0]?.url || "https://placehold.co/600x400";
+
+          return (
+            <div
+              key={booking.id}
+              className="p-4 border rounded-xl bg-[#F3FBFA] shadow"
+            >
               <img
                 src={image}
                 alt={venue.name}
-                className="w-24 h-16 object-cover rounded border"
+                className="w-full h-40 object-cover rounded mb-3"
               />
-              <div className="flex-1">
-                <h3 className="font-semibold">{venue.name}</h3>
-                <p className="text-sm">
-                  From: {startDate} <br />To: {endDate}
+              <h3 className="text-lg font-heading font-bold mb-1">
+                {venue.name}
+              </h3>
+              <p className="text-sm text-gray-600 mb-1">
+                {venue.location?.city || "Unknown location"}, {venue.location?.country}
+              </p>
+              <p className="text-sm">
+                From: {startDate}
+                <br />To: {endDate}
+              </p>
+              <p className="text-sm mt-1">Guests: {booking.guests}</p>
+              {customer && (
+                <p className="text-sm text-gray-600 mt-1">
+                  Booked by: <strong>{customer.name}</strong> ({customer.email})
                 </p>
-                <p className="text-sm mt-1">Guests: {booking.guests}</p>
-                {customer && (
-                  <p className="text-sm text-gray-600 mt-1">
-                    Booked by: <strong>{customer.name}</strong> ({customer.email})
-                  </p>
-                )}
-              </div>
+              )}
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }
