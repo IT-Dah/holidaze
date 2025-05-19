@@ -33,6 +33,33 @@ function MyBookings() {
     fetchBookings();
   }, [user]);
 
+  async function handleCancelBooking(bookingId) {
+    const confirmed = confirm("Are you sure you want to cancel this booking?");
+    if (!confirmed) return;
+    setDeletingId(bookingId);
+
+    try {
+      const res = await fetch(`${BASE_URL}/bookings/${bookingId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+          "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
+        },
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.errors?.[0]?.message || "Failed to cancel booking");
+      }
+
+      setBookings((prev) => prev.filter((b) => b.id !== bookingId));
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setDeletingId(null);
+    }
+  }
+
   if (loading) return <p>Loading your bookings...</p>;
   if (error) return <p className="text-red-600">{error}</p>;
   if (bookings.length === 0) return <p className="text-center py-6">You don’t have any bookings yet.</p>;
