@@ -1,3 +1,4 @@
+// ✅ src/pages/EditProfile.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -46,33 +47,31 @@ function EditProfile() {
   }
 
   return (
-    <main className="max-w-xl mx-auto py-12 px-4 font-body text-primary">
-      <h1 className="text-3xl font-heading font-bold mb-6">Edit Profile</h1>
+    <main className="max-w-4xl mx-auto p-6 font-body text-primary">
+      <div className="bg-[#F3FBFA] p-8 rounded-xl shadow text-center max-w-xl mx-auto">
+        <h1 className="text-2xl font-heading font-bold mb-6">Edit Your Avatar</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="text-center">
-          <img
-            src={avatarUrl || "https://placehold.co/100x100?text=User"}
-            alt="Avatar preview"
-            className="w-24 h-24 rounded-full mx-auto border mb-4 object-cover"
-          />
-        </div>
-
-        <input
-          type="url"
-          placeholder="Enter new avatar image URL"
-          value={avatarUrl}
-          onChange={(e) => setAvatarUrl(e.target.value)}
-          className="w-full border px-4 py-2 rounded"
-          required
+        <img
+          src={avatarUrl || "https://placehold.co/100x100?text=User"}
+          alt="Avatar preview"
+          className="w-24 h-24 rounded-full mx-auto border object-cover mb-4"
         />
 
-        {error && <p className="text-red-600 text-sm">{error}</p>}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="url"
+            placeholder="Enter new avatar image.url"
+            value={avatarUrl}
+            onChange={(e) => setAvatarUrl(e.target.value)}
+            required
+            className="w-full border px-4 py-2 rounded text-sm"
+          />
 
-        <div className="flex gap-4">
+          {error && <p className="text-red-600 text-sm">{error}</p>}
+
           <button
             type="submit"
-            className="bg-cta text-white px-4 py-2 rounded shadow hover:opacity-90"
+            className="w-full bg-[#BA4F4F] text-white font-semibold py-2 rounded shadow hover:opacity-90"
           >
             Save Avatar
           </button>
@@ -80,12 +79,12 @@ function EditProfile() {
           <button
             type="button"
             onClick={() => navigate("/profile")}
-            className="bg-gray-300 text-primary px-4 py-2 rounded shadow hover:opacity-90"
+            className="w-full bg-gray-200 text-primary font-medium py-2 rounded shadow hover:opacity-90"
           >
             Cancel
           </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </main>
   );
 }
